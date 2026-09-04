@@ -1,429 +1,605 @@
-# 🎨 MotionForge - Project Complete! ✅
+# MotionForge
 
-**Created:** September 3, 2026  
-**Status:** ✅ Ready to Run  
-**Location:** `C:\Users\acer\Desktop\MotionForge`
+A modern, open animation library built with **Next.js, TypeScript, Tailwind CSS, and Framer Motion**.
 
----
+MotionForge provides a growing collection of UI animation previews organized into categories. Users can browse animations, preview them directly in the browser, and download the available source packages as ZIP files.
 
-## 🚀 Quick Start
+## ✨ Features
 
-```bash
-cd C:\Users\acer\Desktop\MotionForge
-npm install
-npm run dev
-```
-
-Open `http://localhost:3000`
-
----
-
-## ✨ What's Built
-
-### Pages (9 Complete)
-✅ Homepage - Spectacular animated hero & marketing sections  
-✅ Library - Browse 52 components with filters & search  
-✅ Component Detail - Individual component pages with previews  
-✅ Pricing - Single-tier pricing page (₹450)  
-✅ Checkout - Mock payment flow  
-✅ Login/Signup - Authentication pages  
-✅ Dashboard - User account management  
-✅ About - Project information  
-
-### Components (45+ Files)
-✅ **UI Components** - Button, Input, Badge, Section, Container, Skeleton, AnimatedText, StaggerReveal  
-✅ **Navigation** - Navbar, Footer, Mobile Menu, Custom Cursor  
-✅ **Marketing** - Hero, ShowcaseGrid, InfiniteShowcase, Testimonials, FinalCTA, StatsStrip  
-✅ **Library** - ComponentCard, FilterBar, SearchDialog, LibraryHeader, ComponentGrid  
-✅ **Code** - CodeViewer with syntax highlighting & lock/unlock states  
-
-### Animation Library (52 Components)
-✅ **Text** (8) - Reveal, Split, Scramble, Typewriter, Gradient, Blur, Morph, Glitch  
-✅ **Buttons** (7) - Magnetic, Liquid, Glow, Shimmer, BorderBeam, Ripple, Morph  
-✅ **Cards** (7) - 3D Tilt, Spotlight, HoverLift, Parallax, Glass, Magnetic, Expandable  
-✅ **Navigation** (6) - MagneticNav, FloatingDock, AnimatedTabs, SlidingMenu, MorphingMenu, CommandMenu  
-✅ **Backgrounds** (7) - Aurora, Noise, Grid, Particles, Spotlight, DotField, Waves  
-✅ **Cursor** (4) - Magnetic, Trail, Glow, Spotlight  
-✅ **Scroll** (6) - Parallax, Horizontal, Reveal, Sticky, ImageMask, TextParallax  
-✅ **Creative** (7) - Gooey, ImageDistortion, LiquidMorph, SVGMorph, Elastic, ShapeTransition, NoiseDistortion  
-
-### Features
-✅ Authentication system (demo mode with Zustand)  
-✅ Paywall & access control  
-✅ Search with CMD+K  
-✅ Advanced filtering  
-✅ Code viewer with lock/unlock  
-✅ Custom cursor (desktop)  
-✅ Responsive design  
-✅ Dark theme  
-✅ Smooth animations throughout  
-✅ SEO optimized  
-✅ Accessibility features  
+- 🎬 **Animation Video Previews** — Browse real animation preview videos directly from the library.
+- 📂 **Multiple Categories** — Explore scroll animations, grid animations, hero animations, mouse effects, sliders, WebGL shaders, navigation menus, text animations, and more.
+- ▶️ **Auto-Playing Previews** — Animation previews play directly inside the library cards.
+- 🔍 **Category Filtering** — Quickly filter animations by category.
+- 🎲 **Randomized Library** — Animation components can be displayed in a dynamic randomized order.
+- 🔗 **Direct Animation Pages** — Click an animation to open its dedicated preview and download page.
+- 📦 **ZIP Downloads** — Download available animation source packages directly.
+- 🔒 **Locked Downloads** — Animations without an available ZIP package are clearly marked as locked.
+- 🧭 **Persistent Category Navigation** — When returning from an animation page, the selected library category is preserved.
+- ♾️ **Infinite Animation Showcase** — The homepage includes a continuously scrolling animation showcase.
+- 📱 **Fully Responsive** — Optimized for desktop, tablet, and mobile devices.
+- 🌙 **Modern Dark UI** — Built around a clean dark design system using `#1e1e1e`.
+- 📚 **Documentation Pages** — Includes documentation, FAQ, terms, privacy policy, and license pages.
+- ⚡ **Next.js App Router** — Modern routing and server-side capabilities.
+- 🎨 **Smooth Motion** — Powered by Framer Motion and modern CSS animations.
 
 ---
 
-## 📊 Project Stats
+## 🛠 Tech Stack
 
-- **Total Files:** 45 TypeScript/TSX files
-- **Lines of Code:** ~8,000+
-- **Components:** 52 animation definitions
-- **Pages:** 9 complete routes
-- **Dependencies:** 23 packages
-- **Build Time:** ~3 hours of development
-- **Bundle Size:** Optimized with code splitting
-
----
-
-## 🏗️ Tech Stack
-
-| Category | Technology |
-|----------|-----------|
-| Framework | Next.js 16.3.4 (App Router) |
-| Language | TypeScript 5 |
-| UI Library | React 19.2.8 |
-| Styling | Tailwind CSS 4 |
-| Animation | Framer Motion 13.2.0 |
-| Animation | GSAP 3.15.0 |
-| State | Zustand 5.0.15 |
-| Icons | Lucide React 1.40.0 |
-| Utils | clsx, tailwind-merge, CVA |
+| Technology    | Usage                         |
+| ------------- | ----------------------------- |
+| Next.js       | Application framework         |
+| TypeScript    | Type safety                   |
+| React         | User interface                |
+| Tailwind CSS  | Styling                       |
+| Framer Motion | UI animations                 |
+| GSAP          | Advanced animation effects    |
+| Lucide React  | Icons                         |
+| Prisma        | Database tooling              |
+| NextAuth      | Authentication infrastructure |
 
 ---
 
 ## 📁 Project Structure
 
-```
-C:\Users\acer\Desktop\MotionForge\
-├── 📄 README.md              - Main documentation
-├── 📄 SETUP.md               - Setup instructions
-├── 📄 ARCHITECTURE.md        - Technical details
-├── 📄 package.json           - Dependencies
-├── 📄 tsconfig.json          - TypeScript config
-├── 📄 tailwind.config.ts     - Tailwind config
-├── 📄 .env.example           - Environment template
+```text
+MotionForge/
+│
+├── public/
+│   ├── background_animations/
+│   ├── grid_animations/
+│   ├── hero_animations/
+│   ├── hover_effect/
+│   ├── mouse_effects/
+│   ├── navigation_menu/
+│   ├── page_transition/
+│   ├── scroll_animations/
+│   ├── sliders/
+│   ├── text_animations/
+│   ├── webgl_shaders/
+│   │
+│   ├── downloads/
+│   │   ├── background_animations/
+│   │   ├── grid_animations/
+│   │   ├── hero_animations/
+│   │   ├── hover_effect/
+│   │   ├── mouse_effects/
+│   │   ├── navigation_menu/
+│   │   ├── page_transition/
+│   │   ├── scroll_animations/
+│   │   ├── sliders/
+│   │   └── text_animations/
+│   │
+│   └── vercel.svg
+│
+├── prisma/
+│   └── dev.db
 │
 ├── src/
-│   ├── app/                  - Next.js pages
-│   │   ├── page.tsx          - Homepage ✅
-│   │   ├── layout.tsx        - Root layout ✅
-│   │   ├── globals.css       - Global styles ✅
-│   │   ├── library/          - Library page ✅
-│   │   ├── components/[slug] - Component details ✅
-│   │   ├── pricing/          - Pricing page ✅
-│   │   ├── checkout/         - Checkout flow ✅
-│   │   ├── dashboard/        - User dashboard ✅
-│   │   ├── login/            - Login page ✅
-│   │   ├── signup/           - Signup page ✅
-│   │   └── about/            - About page ✅
+│   │
+│   ├── app/
+│   │   ├── about/
+│   │   ├── api/
+│   │   │   └── auth/
+│   │   ├── code/
+│   │   │   └── [slug]/
+│   │   ├── dashboard/
+│   │   ├── documentation/
+│   │   ├── faq/
+│   │   ├── legal/
+│   │   │   ├── license/
+│   │   │   ├── privacy/
+│   │   │   └── terms/
+│   │   ├── library/
+│   │   ├── login/
+│   │   ├── signup/
+│   │   ├── actions.ts
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
 │   │
 │   ├── components/
-│   │   ├── ui/               - Base components ✅
-│   │   ├── navigation/       - Nav & footer ✅
-│   │   ├── marketing/        - Marketing sections ✅
-│   │   ├── library/          - Library features ✅
-│   │   ├── code/             - Code viewer ✅
-│   │   └── playground/       - (Future use)
+│   │   ├── library/
+│   │   │   ├── component-card.tsx
+│   │   │   ├── component-grid.tsx
+│   │   │   ├── filter-bar.tsx
+│   │   │   ├── filter-sidebar.tsx
+│   │   │   ├── mobile-filter.tsx
+│   │   │   ├── search-dialog.tsx
+│   │   │   └── video-preview.tsx
+│   │   │
+│   │   ├── marketing/
+│   │   │   ├── hero.tsx
+│   │   │   ├── infinite-showcase.tsx
+│   │   │   ├── showcase-grid.tsx
+│   │   │   ├── stats-strip.tsx
+│   │   │   └── final-cta.tsx
+│   │   │
+│   │   ├── navigation/
+│   │   │   ├── navbar.tsx
+│   │   │   ├── mobile-menu.tsx
+│   │   │   └── footer.tsx
+│   │   │
+│   │   └── ui/
+│   │       ├── button.tsx
+│   │       ├── input.tsx
+│   │       ├── badge.tsx
+│   │       ├── accordion.tsx
+│   │       ├── smooth-scroll.tsx
+│   │       └── premium-background.tsx
 │   │
 │   ├── data/
-│   │   └── animations.ts     - 52 components ✅
+│   │   └── animations.ts
 │   │
-│   ├── hooks/                - Custom hooks ✅
-│   ├── lib/                  - Utils & config ✅
-│   ├── types/                - TypeScript types ✅
-│   └── utils/                - Helper functions ✅
+│   ├── hooks/
+│   │   ├── use-intersection.ts
+│   │   ├── use-media-query.ts
+│   │   ├── use-mouse-position.ts
+│   │   └── use-scroll-progress.ts
+│   │
+│   ├── lib/
+│   │   ├── auth.ts
+│   │   ├── categories.ts
+│   │   ├── constants.ts
+│   │   ├── db.ts
+│   │   └── motion.ts
+│   │
+│   ├── types/
+│   │   ├── index.ts
+│   │   └── next-auth.d.ts
+│   │
+│   └── utils/
+│       ├── analytics.ts
+│       └── cn.ts
 │
-└── public/                   - Static assets
+├── package.json
+├── tailwind.config.ts
+├── next.config.ts
+└── tsconfig.json
 ```
 
 ---
 
-## 🎯 User Flow
+## 🚀 Getting Started
 
-### Browse (No Account)
-1. Visit homepage → See spectacular animated hero
-2. Click "Explore Library" → Browse 52 components
-3. Use filters (category/tech/difficulty)
-4. Search with CMD+K
-5. Click component → See detail page
-6. Notice code is locked 🔒
+### Prerequisites
 
-### Purchase
-1. Click "Get Access — ₹450"
-2. Sign up (or log in)
-3. Proceed to checkout
-4. Fill payment form (demo)
-5. Complete purchase
-6. Redirected to dashboard
+Make sure you have the following installed:
 
-### Access Unlocked
-1. Return to library
-2. Open any component
-3. Code now unlocked ✅
-4. Copy source code
-5. View props & documentation
-6. Download complete library
+- Node.js 18 or newer
+- npm
+
+Check your versions:
+
+```bash
+node -v
+npm -v
+```
+
+### Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/anakhas771/MotionForge.git
+```
+
+Move into the project directory:
+
+```bash
+cd MotionForge
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Open:
+
+```text
+http://localhost:3000
+```
+
+---
+
+## 📜 Available Scripts
+
+### Development
+
+```bash
+npm run dev
+```
+
+Starts the Next.js development server.
+
+### Production Build
+
+```bash
+npm run build
+```
+
+Creates an optimized production build.
+
+### Start Production Server
+
+```bash
+npm start
+```
+
+Runs the production build locally.
+
+### Lint
+
+```bash
+npm run lint
+```
+
+Checks the project for ESLint issues.
+
+---
+
+## 🎬 Animation System
+
+MotionForge dynamically discovers animation preview videos from the `public` directory.
+
+For example:
+
+```text
+public/
+├── scroll_animations/
+│   ├── scroll-1.mp4
+│   ├── scroll-2.mp4
+│   └── scroll-3.mp4
+│
+├── hero_animations/
+│   ├── hero-1.mp4
+│   └── hero-2.mp4
+│
+└── grid_animations/
+    ├── grid-1.mp4
+    └── grid-2.mp4
+```
+
+The application scans the configured animation folders and generates the animation manifest dynamically.
+
+This allows new animation previews to be added without manually creating every animation card.
+
+---
+
+## 📦 Adding a New Animation
+
+### 1. Add the Preview Video
+
+Place the `.mp4` file inside the appropriate category.
+
+Example:
+
+```text
+public/scroll_animations/scroll-20.mp4
+```
+
+### 2. Add the ZIP Package
+
+If the source code is available, add the ZIP file to the matching download directory:
+
+```text
+public/downloads/scroll_animations/scroll-20.zip
+```
+
+### 3. Restart the Development Server
+
+```bash
+npm run dev
+```
+
+The animation should automatically appear in the library.
+
+---
+
+## 📂 Animation Categories
+
+MotionForge currently supports categories such as:
+
+- Scroll Animations
+- Grid Animations
+- Hero Animations
+- Mouse Effects
+- Page Transitions
+- Sliders
+- WebGL Shaders
+- Background Animations
+- Navigation Menus
+- Hover Effects
+- Text Animations
+- 3D Animations
+- Physics Effects
+- SVG Animations
+
+Categories without available videos will simply remain empty.
+
+---
+
+## 🔗 Animation URLs
+
+Each animation has a generated slug based on its filename.
+
+Example:
+
+```text
+scroll-1.mp4
+```
+
+Generates:
+
+```text
+scroll-1
+```
+
+The animation page can then be accessed through:
+
+```text
+/code/scroll-1
+```
+
+Clicking an animation card in the library opens its dedicated animation page.
+
+---
+
+## 📦 Download System
+
+Source packages are stored in:
+
+```text
+public/downloads/
+```
+
+The folder structure should match the animation category structure.
+
+Example:
+
+```text
+public/
+├── hero_animations/
+│   └── hero-1.mp4
+│
+└── downloads/
+    └── hero_animations/
+        └── hero-1.zip
+```
+
+If a matching ZIP package exists, the user can download it.
+
+If no ZIP package is available, the animation is displayed as:
+
+```text
+ZIP Locked
+```
+
+---
+
+## 🔄 Category Persistence
+
+The selected animation category is stored in the URL.
+
+For example:
+
+```text
+/library?category=Scroll%20Animations
+```
+
+When a user opens an animation and navigates back, they remain in the same category instead of being returned to **All Components**.
 
 ---
 
 ## 🎨 Design System
 
-### Colors
-- Background: `#050505` (near black)
-- Foreground: `#e5e5e5` (light gray)
-- Accent: `#a78bfa` (purple)
-- Border: `#1a1a1a` (dark gray)
+MotionForge uses a modern dark visual style.
 
-### Typography
-- Font: Geist Sans & Geist Mono
-- Sizes: 4xl to 8xl for headings
-- Tracking: Tight for large text
+The primary interface color is:
 
-### Animations
-- Duration: Fast (150ms), Medium (300ms), Slow (600ms)
-- Easing: Custom cubic-bezier curves
-- Springs: Stiffness 200-400, Damping 20-30
+```css
+#1e1e1e
+```
 
----
+The navigation uses a pill-style layout, and the rest of the interface follows the same dark design language.
 
-## ⚡ Performance
+Global styles can be customized in:
 
-- **First Load:** < 3s (optimized)
-- **Animations:** 60fps (GPU accelerated)
-- **Bundle:** Code-split by route
-- **Images:** Next.js optimized
-- **CSS:** Purged unused classes
-
----
-
-## ♿ Accessibility
-
-✅ Semantic HTML  
-✅ ARIA labels  
-✅ Keyboard navigation  
-✅ Focus states  
-✅ Reduced motion support  
-✅ Color contrast WCAG AA  
-✅ Screen reader friendly  
-
----
-
-## 🔒 Security Note
-
-⚠️ **Current implementation is for DEMO purposes:**
-
-- Authentication uses localStorage (not production-ready)
-- Payment is simulated (no real transactions)
-- No backend database
-- Client-side access control only
-
-**For production, implement:**
-- Real authentication (NextAuth.js, Supabase)
-- Payment integration (Razorpay, Stripe)
-- Database (PostgreSQL, MongoDB)
-- Server-side access control
-- Rate limiting & security headers
-
----
-
-## 📝 Testing Checklist
-
-### Homepage ✅
-- [ ] Hero animation loads smoothly
-- [ ] CTAs link correctly
-- [ ] Stats display properly
-- [ ] Showcase grid renders
-- [ ] Testimonials visible
-- [ ] Mobile responsive
-
-### Library ✅
-- [ ] All 52 components load
-- [ ] Filters work correctly
-- [ ] Search opens with CMD+K
-- [ ] Cards link to details
-- [ ] Pagination/infinite scroll works
-- [ ] Mobile responsive
-
-### Component Detail ✅
-- [ ] Component data displays
-- [ ] Code viewer shows locked state
-- [ ] Props table renders
-- [ ] Related components link
-- [ ] CTA displays correctly
-- [ ] Mobile responsive
-
-### Authentication ✅
-- [ ] Signup creates account
-- [ ] Login authenticates
-- [ ] Logout clears session
-- [ ] Protected routes work
-- [ ] Persistent sessions
-- [ ] Mobile responsive
-
-### Checkout ✅
-- [ ] Order summary correct
-- [ ] Form validates
-- [ ] Payment processes (demo)
-- [ ] Redirects to dashboard
-- [ ] Access granted
-- [ ] Mobile responsive
-
-### Dashboard ✅
-- [ ] User info displays
-- [ ] Access status correct
-- [ ] Quick actions work
-- [ ] Download available
-- [ ] Logout works
-- [ ] Mobile responsive
-
----
-
-## 🚀 Next Steps
-
-### Immediate (Run & Test)
-1. `npm install` - Install dependencies
-2. `npm run dev` - Start dev server
-3. Test complete user flow
-4. Try all features
-5. Check mobile responsiveness
-
-### Customization
-1. Edit brand name in `src/lib/constants.ts`
-2. Change colors in `src/app/globals.css`
-3. Update pricing if needed
-4. Add your own components
-
-### Production (When Ready)
-1. Set up real authentication
-2. Integrate payment provider
-3. Add database
-4. Configure email service
-5. Set up analytics
-6. Deploy to Vercel/hosting
-
----
-
-## 📚 Documentation
-
-- **README.md** - Overview & quick start
-- **SETUP.md** - Detailed setup guide
-- **ARCHITECTURE.md** - Technical deep dive
-- **Code comments** - Inline documentation
-
----
-
-## 🎉 What Makes This Special
-
-### 1. Production Quality
-Not a tutorial project - this is a complete, polished application ready for real use.
-
-### 2. Sophisticated Design
-Premium dark theme, custom cursor, smooth animations throughout - feels like a real product.
-
-### 3. Complete Feature Set
-Authentication, paywall, checkout, dashboard - all the pieces of a real SaaS.
-
-### 4. Real Component Library
-52 actual animation components with metadata, not placeholders.
-
-### 5. Modern Stack
-Latest Next.js, React 19, Tailwind 4, Framer Motion 13 - cutting edge tech.
-
-### 6. Excellent Code Quality
-TypeScript throughout, proper component structure, reusable patterns.
-
----
-
-## 💡 Key Achievements
-
-✨ Spectacular animated homepage that demonstrates motion principles  
-✨ Functional component library with 52 real definitions  
-✨ Complete authentication & paywall system  
-✨ Premium UI/UX with custom cursor & smooth animations  
-✨ Fully responsive design  
-✨ Production-ready code architecture  
-✨ Comprehensive documentation  
-
----
-
-## 🎯 Perfect For
-
-- **Portfolio Showcase** - Demonstrates advanced React/Next.js skills
-- **Learning Resource** - Study modern web development patterns
-- **Starter Template** - Launch your own animation library SaaS
-- **Code Reference** - See how to implement complex features
-- **Design Inspiration** - Premium dark theme & animations
-
----
-
-## ⭐ Highlights
-
-```typescript
-// Sophisticated animation system
-const heroText = "Build interfaces that move.";
-heroText.split("").map((char, i) => (
-  <motion.span
-    initial={{ opacity: 0, y: 60, rotateX: -40 }}
-    animate={{ opacity: 1, y: 0, rotateX: 0 }}
-    transition={{ delay: i * 0.02, type: "spring" }}
-  >
-    {char}
-  </motion.span>
-))
-
-// Clean component architecture
-<CodeViewer 
-  code={component.code} 
-  isUnlocked={user?.hasAccess} 
-/>
-
-// Type-safe data structure
-interface AnimationComponent {
-  id: string;
-  slug: string;
-  name: string;
-  category: Category;
-  technologies: Technology[];
-  locked: boolean;
-  code: Record<string, string>;
-  // ... 10+ more properties
-}
+```text
+src/app/globals.css
 ```
 
 ---
 
-## 🏆 Final Status
+## 🧭 Main Pages
 
-✅ **All 10 tasks completed**  
-✅ **45+ TypeScript files**  
-✅ **52 animation components**  
-✅ **9 complete pages**  
-✅ **Full authentication system**  
-✅ **Complete checkout flow**  
-✅ **Responsive design**  
-✅ **Production-ready code**  
-✅ **Comprehensive documentation**  
-✅ **Ready to run NOW**  
+| Route            | Description                         |
+| ---------------- | ----------------------------------- |
+| `/`              | Homepage                            |
+| `/library`       | Animation library                   |
+| `/code/[slug]`   | Animation preview and download page |
+| `/documentation` | Documentation                       |
+| `/faq`           | Frequently asked questions          |
+| `/about`         | About MotionForge                   |
+| `/login`         | Login page                          |
+| `/signup`        | Signup page                         |
+| `/dashboard`     | User dashboard                      |
+| `/legal/terms`   | Terms of Service                    |
+| `/legal/privacy` | Privacy Policy                      |
+| `/legal/license` | License information                 |
 
 ---
 
-## 🚀 Launch Command
+## ⚙️ Environment Variables
+
+Create a `.env.local` file if required:
+
+```env
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_SITE_NAME=MotionForge
+```
+
+For production:
+
+```env
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+NEXT_PUBLIC_SITE_NAME=MotionForge
+```
+
+Do not commit sensitive environment variables.
+
+---
+
+## 🚀 Deployment
+
+MotionForge is designed to be deployed on platforms that support Next.js.
+
+### Vercel
+
+Install the Vercel CLI:
 
 ```bash
-cd C:\Users\acer\Desktop\MotionForge
-npm install  # First time only
-npm run dev  # Start development server
+npm install -g vercel
 ```
 
-**Visit:** `http://localhost:3000`
+Deploy:
+
+```bash
+vercel
+```
+
+You can also connect the GitHub repository to Vercel for automatic deployments.
 
 ---
 
-**🎉 MotionForge is complete and ready to launch!**
+## ⚠️ Large Media Files
 
-Built with ❤️ using Next.js, TypeScript, Framer Motion, and Tailwind CSS.
+The repository intentionally ignores large `.mp4` and `.zip` files:
+
+```gitignore
+# large animation videos
+/public/**/*.mp4
+
+# downloadable packages
+/public/**/*.zip
+```
+
+This prevents the Git repository from becoming extremely large.
+
+For production deployment, large animation videos and downloadable ZIP files can be stored using external storage or a CDN, such as:
+
+- Vercel Blob
+- Cloudflare R2
+- Amazon S3
+- Cloudinary
+- Supabase Storage
 
 ---
 
-*Project completed: September 3, 2026*  
-*Time: 11:41 UTC*  
-*Status: Production-Ready Demo*
+## 🧪 Code Quality
+
+Run ESLint:
+
+```bash
+npm run lint
+```
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+Before deploying, run:
+
+```bash
+npm run lint
+npm run build
+```
+
+---
+
+## 🌐 Browser Support
+
+MotionForge supports modern browsers including:
+
+- Google Chrome
+- Microsoft Edge
+- Mozilla Firefox
+- Safari
+- Modern mobile browsers
+
+For the best animation experience, use the latest version of your browser.
+
+---
+
+## 📄 License
+
+Please review the project's license page for usage terms:
+
+```text
+/legal/license
+```
+
+The downloadable animation packages may have their own usage restrictions depending on the included source material.
+
+---
+
+## 🤝 Contributing
+
+Contributions, improvements, and ideas are welcome.
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Make your changes.
+4. Run lint and build checks.
+5. Open a pull request.
+
+---
+
+## 🛣 Roadmap
+
+Future improvements may include:
+
+- More animation categories
+- More downloadable animation packages
+- Improved search
+- Animation favorites
+- User collections
+- Better preview controls
+- External media storage
+- CDN integration
+- Better analytics
+- Community-contributed animations
+
+---
+
+## 💻 Development
+
+```bash
+git clone https://github.com/anakhas771/MotionForge.git
+
+cd MotionForge
+
+npm install
+
+npm run dev
+```
+
+Then open:
+
+```text
+http://localhost:3000
+```
+
+---
+
+Built with ❤️ using **Next.js, TypeScript, Tailwind CSS, and Framer Motion**.
