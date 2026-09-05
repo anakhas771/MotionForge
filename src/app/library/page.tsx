@@ -125,11 +125,11 @@ function LibraryContent() {
             />
           </div>
 
-          {/* Main Layout */}
+      {/* Main Layout */}
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Fixed Sidebar */}
-            <aside className="hidden lg:block lg:w-70 lg:shrink-0">
-              <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto">
+            <aside className="hidden lg:block lg:w-64 lg:shrink-0">
+              <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto scrollbar-thin">
                 <FilterSidebar
                   activeCategory={activeCategory}
                   onCategoryChange={setActiveCategory}
@@ -142,12 +142,38 @@ function LibraryContent() {
             {/* Animation Grid */}
             <div className="flex-1 min-w-0">
               {isLoading ? (
-                <div className="py-20 text-center text-muted">
-                  Loading animations...
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {Array.from({ length: 12 }).map((_, i) => (
+                    <div key={i} className="rounded-xl border border-border bg-card overflow-hidden">
+                      <div
+                        className="aspect-[4/3] bg-surface relative overflow-hidden"
+                        style={{ animationDelay: `${i * 0.05}s` }}
+                      >
+                        <div
+                          className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_ease-in-out_infinite]"
+                          style={{
+                            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent)",
+                            animationDelay: `${i * 0.08}s`,
+                          }}
+                        />
+                      </div>
+                      <div className="p-4 space-y-2">
+                        <div
+                          className="h-4 bg-surface-hover rounded animate-pulse"
+                          style={{ animationDelay: `${i * 0.05}s` }}
+                        />
+                        <div
+                          className="h-3 bg-surface-hover rounded w-2/3 animate-pulse"
+                          style={{ animationDelay: `${i * 0.07}s` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               ) : filteredComponents.length === 0 ? (
-                <div className="py-20 text-center text-muted">
-                  No animations found in this category.
+                <div className="py-20 text-center space-y-4">
+                  <div className="text-4xl opacity-30">🎬</div>
+                  <p className="text-muted text-lg">No animations found in this category.</p>
                 </div>
               ) : (
                 <ComponentGrid

@@ -61,9 +61,8 @@ export function VideoPreview({ videoSrc, fallback, className }: VideoPreviewProp
         ref={videoRef}
         src={videoSrc}
         muted
-        loop
         playsInline
-        preload="metadata"
+        preload="none"
         onError={() => setHasError(true)}
         className="w-full h-full object-cover"
       />

@@ -98,12 +98,12 @@ const particles = [
         </motion.div>
 
         {/* Hero Heading */}
-        <div className="space-y-2">
+        <div className="space-y-2 relative z-10">
           <AnimatedLine text={heroText.line1} delay={0.2} />
           <AnimatedLine
             text={heroText.line2}
             delay={0.5}
-            className="gradient-text"
+            className="gradient-text text-pulse-gradient"
           />
         </div>
 
@@ -112,7 +112,7 @@ const particles = [
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1 }}
-          className="text-xl text-muted max-w-2xl mx-auto"
+          className="text-xl md:text-2xl text-muted/90 max-w-2xl mx-auto leading-relaxed relative z-10"
         >
           A premium collection of production-ready React animations and
           interactive UI components.
@@ -123,9 +123,9 @@ const particles = [
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.2 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10 pt-4"
         >
-          <Button asChild size="lg">
+          <Button asChild size="lg" className="rounded-full shadow-[0_0_40px_-10px_rgba(167,139,250,0.4)] hover:shadow-[0_0_60px_-10px_rgba(167,139,250,0.6)] transition-all">
             <Link href="/library">Explore Library</Link>
           </Button>
         </motion.div>

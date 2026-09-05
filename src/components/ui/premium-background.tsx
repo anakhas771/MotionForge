@@ -18,7 +18,6 @@ export function PremiumBackground() {
 
     if (!gradient1 || !gradient2 || !gradient3) return;
 
-    // Subtle mouse-reactive movement
     const moveX1 = mouse.normalizedX * 30;
     const moveY1 = mouse.normalizedY * 30;
     const moveX2 = mouse.normalizedX * -20;
@@ -37,91 +36,96 @@ export function PremiumBackground() {
       className="fixed inset-0 -z-10 overflow-hidden pointer-events-none"
       aria-hidden="true"
     >
-      {/* Base gradient layer */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#030303] via-[#050505] to-[#020202]" />
+      {/* Deep near-black base */}
+      <div className="absolute inset-0 bg-[#030303]" />
 
-      {/* Animated gradient orbs */}
+      {/* Subtle radial gradient from top */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0f0f15]/60 via-[#050505]/80 to-[#020202]" />
+
+      {/* Large soft radial light fields */}
       {!prefersReducedMotion && (
         <>
-          {/* Orb 1 - Purple/Violet */}
           <div
-            className="gradient-orb-1 absolute top-0 -left-1/4 w-[800px] h-[800px] rounded-full opacity-20 blur-[120px] transition-transform duration-1000 ease-out"
+            className="gradient-orb-1 absolute -top-[20%] -left-[10%] w-[900px] h-[900px] rounded-full opacity-[0.12] blur-[140px] transition-transform duration-1000 ease-out"
             style={{
-              background: "radial-gradient(circle, rgba(167, 139, 250, 0.4) 0%, transparent 70%)",
-              animation: "float1 20s ease-in-out infinite",
+              background: "radial-gradient(circle at center, rgba(167,139,250,0.35) 0%, rgba(167,139,250,0.05) 50%, transparent 70%)",
+              animation: "float1 22s ease-in-out infinite",
             }}
           />
-
-          {/* Orb 2 - Blue */}
           <div
-            className="gradient-orb-2 absolute top-1/2 -right-1/4 w-[600px] h-[600px] rounded-full opacity-15 blur-[100px] transition-transform duration-1000 ease-out"
+            className="gradient-orb-2 absolute top-[30%] -right-[15%] w-[700px] h-[700px] rounded-full opacity-[0.10] blur-[120px] transition-transform duration-1000 ease-out"
             style={{
-              background: "radial-gradient(circle, rgba(96, 165, 250, 0.3) 0%, transparent 70%)",
-              animation: "float2 25s ease-in-out infinite",
+              background: "radial-gradient(circle at center, rgba(96,165,250,0.30) 0%, rgba(96,165,250,0.05) 50%, transparent 70%)",
+              animation: "float2 28s ease-in-out infinite",
             }}
           />
-
-          {/* Orb 3 - Indigo */}
           <div
-            className="gradient-orb-3 absolute bottom-0 left-1/2 w-[700px] h-[700px] rounded-full opacity-10 blur-[110px] transition-transform duration-1000 ease-out"
+            className="gradient-orb-3 absolute -bottom-[10%] left-[20%] w-[800px] h-[800px] rounded-full opacity-[0.08] blur-[130px] transition-transform duration-1000 ease-out"
             style={{
-              background: "radial-gradient(circle, rgba(129, 140, 248, 0.35) 0%, transparent 70%)",
-              animation: "float3 30s ease-in-out infinite",
+              background: "radial-gradient(circle at center, rgba(129,140,248,0.30) 0%, rgba(129,140,248,0.05) 50%, transparent 70%)",
+              animation: "float3 32s ease-in-out infinite",
             }}
           />
         </>
       )}
 
-      {/* Noise overlay for texture */}
+      {/* Very subtle grid pattern */}
       <div
-        className="absolute inset-0 opacity-[0.015]"
+        className="absolute inset-0 opacity-[0.035]"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
         }}
       />
 
-      {/* Vignette */}
+      {/* Soft noise texture */}
+      <div
+        className="absolute inset-0 opacity-[0.012]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* Vignette overlay for depth */}
       <div
         className="absolute inset-0"
         style={{
-          background: "radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%)",
+          background: "radial-gradient(circle at 50% 40%, transparent 0%, rgba(0,0,0,0.35) 100%)",
         }}
       />
 
-      <style jsx>{`
+      <style jsx global>{`
         @keyframes float1 {
           0%, 100% {
             transform: translate(0, 0) scale(1);
           }
           33% {
-            transform: translate(100px, -50px) scale(1.1);
+            transform: translate(120px, -60px) scale(1.08);
           }
           66% {
-            transform: translate(-50px, 100px) scale(0.9);
+            transform: translate(-60px, 120px) scale(0.92);
           }
         }
-
         @keyframes float2 {
           0%, 100% {
             transform: translate(0, 0) scale(1);
           }
           33% {
-            transform: translate(-80px, 60px) scale(1.05);
+            transform: translate(-100px, 70px) scale(1.05);
           }
           66% {
-            transform: translate(60px, -80px) scale(0.95);
+            transform: translate(80px, -90px) scale(0.95);
           }
         }
-
         @keyframes float3 {
           0%, 100% {
             transform: translate(0, 0) scale(1);
           }
           50% {
-            transform: translate(-60px, -40px) scale(1.08);
+            transform: translate(-80px, -50px) scale(1.12);
           }
         }
-
         @media (prefers-reduced-motion: reduce) {
           .gradient-orb-1,
           .gradient-orb-2,

@@ -9,16 +9,6 @@ interface ComponentGridProps {
   components: AnimationComponent[];
 }
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.05,
-    },
-  },
-};
-
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -67,23 +57,23 @@ export function ComponentGrid({ components }: ComponentGridProps) {
   }
 
   return (
-    <motion.div
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <AnimatePresence mode="popLayout">
-        {components.map((component) => (
+        {components.map((component, index) => (
           <motion.div
             key={component.id}
             variants={itemVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             layout
+            custom={index}
+            transition={{ delay: Math.min(index * 0.03, 0.5) }}
           >
             <ComponentCard component={component} />
           </motion.div>
         ))}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }
