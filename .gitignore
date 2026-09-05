@@ -58,6 +58,3 @@ next-env.d.ts
 /public/**/*.mp4
 /public/**/*.webm
 
-# downloadable packages
-/public/**/*.zip
-
