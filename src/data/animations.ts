@@ -15,7 +15,7 @@ export const animations: AnimationComponent[] = [
     difficulty: "beginner",
     interactions: ["scroll"],
     // TODO: Map this animation to its verified R2 video file.
-    video: "/videos/text-reveal.mp4",
+    video: `${R2_BASE_URL}/text_animations/text-1.mp4`,
     featured: true,
 
     code: {
@@ -42,7 +42,7 @@ export const animations: AnimationComponent[] = [
     difficulty: "intermediate",
     interactions: ["scroll"],
     // TODO: Map this animation to its verified R2 video file.
-    video: "/videos/split-text.mp4",
+    video: `${R2_BASE_URL}/text_animations/text-2.mp4`,
 
     code: {
       react: `import { motion } from "framer-motion";\n\nexport function SplitText({ text }: { text: string }) {\n  const words = text.split(" ");\n  // ... (unlock for full source)`,
@@ -63,7 +63,7 @@ export const animations: AnimationComponent[] = [
     difficulty: "advanced",
     interactions: ["hover"],
     // TODO: Map this animation to its verified R2 video file.
-    video: "/videos/scramble-text.mp4",
+    video: `${R2_BASE_URL}/text_animations/text-3.mp4`,
     isNew: true,
 
     code: {
@@ -83,6 +83,8 @@ export const animations: AnimationComponent[] = [
     category: "Text Animations",
     technologies: ["react", "typescript"],
     difficulty: "beginner",
+    video: `${R2_BASE_URL}/text_animations/text-4.mp4`,
+
     interactions: ["scroll"],
 
     code: {
@@ -102,6 +104,8 @@ export const animations: AnimationComponent[] = [
     category: "Text Animations",
     technologies: ["css", "tailwind"],
     difficulty: "beginner",
+    video: `${R2_BASE_URL}/text_animations/text-5.mp4`,
+
     interactions: ["hover"],
     featured: true,
 
@@ -123,6 +127,8 @@ export const animations: AnimationComponent[] = [
     category: "Text Animations",
     technologies: ["framer-motion", "react"],
     difficulty: "beginner",
+    video: `${R2_BASE_URL}/text_animations/text-6.mp4`,
+
     interactions: ["scroll"],
 
     code: {
@@ -142,6 +148,8 @@ export const animations: AnimationComponent[] = [
     category: "Text Animations",
     technologies: ["framer-motion", "react"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/text_animations/text-7.mp4`,
+
     interactions: ["scroll"],
     isNew: true,
 
@@ -162,6 +170,8 @@ export const animations: AnimationComponent[] = [
     category: "Text Animations",
     technologies: ["css", "react"],
     difficulty: "advanced",
+    video: `${R2_BASE_URL}/text_animations/text-8.mp4`,
+
     interactions: ["hover"],
 
     code: {
@@ -184,6 +194,8 @@ export const animations: AnimationComponent[] = [
     category: "Hover Effects",
     technologies: ["framer-motion", "react", "typescript"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/hover_effect/hover-1.mp4`,
+
     interactions: ["hover", "mouse"],
     featured: true,
 
@@ -208,6 +220,8 @@ export const animations: AnimationComponent[] = [
     category: "Hover Effects",
     technologies: ["svg", "react", "css"],
     difficulty: "advanced",
+    video: `${R2_BASE_URL}/hover_effect/hover-2.mp4`,
+
     interactions: ["hover"],
 
     code: {
@@ -227,6 +241,8 @@ export const animations: AnimationComponent[] = [
     category: "Hover Effects",
     technologies: ["framer-motion", "react"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/hover_effect/hover-3.mp4`,
+
     interactions: ["hover", "mouse"],
     featured: true,
 
@@ -248,6 +264,8 @@ export const animations: AnimationComponent[] = [
     category: "Hover Effects",
     technologies: ["css", "tailwind", "react"],
     difficulty: "beginner",
+    video: `${R2_BASE_URL}/hover_effect/hover-4.mp4`,
+
     interactions: ["hover"],
 
     code: {
@@ -268,6 +286,8 @@ export const animations: AnimationComponent[] = [
     category: "Hover Effects",
     technologies: ["css", "react"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/hover_effect/hover-5.mp4`,
+
     interactions: ["hover"],
     isNew: true,
 
@@ -288,6 +308,8 @@ export const animations: AnimationComponent[] = [
     category: "Hover Effects",
     technologies: ["framer-motion", "react"],
     difficulty: "beginner",
+    video: `${R2_BASE_URL}/hover_effect/hover-6.mp4`,
+
     interactions: ["click"],
 
     code: {
@@ -307,6 +329,8 @@ export const animations: AnimationComponent[] = [
     category: "Hover Effects",
     technologies: ["framer-motion", "react"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/hover_effect/hover-7.mp4`,
+
     interactions: ["hover", "click"],
 
     code: {
@@ -328,6 +352,8 @@ export const animations: AnimationComponent[] = [
     category: "Hover Effects",
     technologies: ["framer-motion", "react", "typescript"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/hover_effect/hover-8.mp4`,
+
     interactions: ["hover", "mouse"],
     featured: true,
 
@@ -352,6 +378,8 @@ export const animations: AnimationComponent[] = [
     category: "Hover Effects",
     technologies: ["react", "css"],
     difficulty: "advanced",
+    video: `${R2_BASE_URL}/hover_effect/hover-9.mp4`,
+
     interactions: ["mouse"],
     featured: true,
 
@@ -372,6 +400,8 @@ export const animations: AnimationComponent[] = [
     category: "Hover Effects",
     technologies: ["framer-motion", "react"],
     difficulty: "beginner",
+    video: `${R2_BASE_URL}/hover_effect/hover-10.mp4`,
+
     interactions: ["hover"],
 
     code: {
@@ -391,6 +421,8 @@ export const animations: AnimationComponent[] = [
     category: "Hover Effects",
     technologies: ["framer-motion", "react"],
     difficulty: "advanced",
+    video: `${R2_BASE_URL}/hover_effect/hover-11.mp4`,
+
     interactions: ["mouse"],
 
     code: {
@@ -410,6 +442,8 @@ export const animations: AnimationComponent[] = [
     category: "Hover Effects",
     technologies: ["css", "tailwind"],
     difficulty: "beginner",
+    video: `${R2_BASE_URL}/hover_effect/hover-12.mp4`,
+
     interactions: ["hover"],
 
     code: {
@@ -429,6 +463,8 @@ export const animations: AnimationComponent[] = [
     category: "Hover Effects",
     technologies: ["framer-motion", "react"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/hover_effect/hover-13.mp4`,
+
     interactions: ["mouse"],
     isNew: true,
 
@@ -470,6 +506,8 @@ export const animations: AnimationComponent[] = [
     category: "Navigation Menus",
     technologies: ["framer-motion", "react"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/navigation_menu/menu-1.mp4`,
+
     interactions: ["hover", "mouse"],
 
     code: {
@@ -489,6 +527,8 @@ export const animations: AnimationComponent[] = [
     category: "Navigation Menus",
     technologies: ["framer-motion", "react"],
     difficulty: "advanced",
+    video: `${R2_BASE_URL}/navigation_menu/menu-2.mp4`,
+
     interactions: ["hover", "mouse"],
     featured: true,
 
@@ -510,6 +550,8 @@ export const animations: AnimationComponent[] = [
     category: "Navigation Menus",
     technologies: ["framer-motion", "react"],
     difficulty: "beginner",
+    video: `${R2_BASE_URL}/navigation_menu/menu-3.mp4`,
+
     interactions: ["click"],
 
     code: {
@@ -529,6 +571,8 @@ export const animations: AnimationComponent[] = [
     category: "Navigation Menus",
     technologies: ["framer-motion", "react"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/navigation_menu/menu-4.mp4`,
+
     interactions: ["click"],
 
     code: {
@@ -548,6 +592,8 @@ export const animations: AnimationComponent[] = [
     category: "Navigation Menus",
     technologies: ["framer-motion", "react", "svg"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/navigation_menu/menu-5.mp4`,
+
     interactions: ["click"],
 
     code: {
@@ -589,6 +635,8 @@ export const animations: AnimationComponent[] = [
     category: "Background Animations",
     technologies: ["css", "react"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/grid_animations/grid-1.mp4`,
+
     interactions: ["scroll"],
     featured: true,
 
@@ -610,6 +658,8 @@ export const animations: AnimationComponent[] = [
     category: "Background Animations",
     technologies: ["css", "svg"],
     difficulty: "beginner",
+    video: `${R2_BASE_URL}/grid_animations/grid-2.mp4`,
+
     interactions: ["hover"],
 
     code: {
@@ -629,6 +679,8 @@ export const animations: AnimationComponent[] = [
     category: "Background Animations",
     technologies: ["css", "tailwind"],
     difficulty: "beginner",
+    video: `${R2_BASE_URL}/grid_animations/grid-3.mp4`,
+
     interactions: ["scroll"],
 
     code: {
@@ -649,6 +701,8 @@ export const animations: AnimationComponent[] = [
     category: "Background Animations",
     technologies: ["react", "typescript"],
     difficulty: "advanced",
+    video: `${R2_BASE_URL}/grid_animations/grid-4.mp4`,
+
     interactions: ["mouse"],
     featured: true,
 
@@ -670,6 +724,8 @@ export const animations: AnimationComponent[] = [
     category: "Background Animations",
     technologies: ["react", "css"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/grid_animations/grid-5.mp4`,
+
     interactions: ["mouse"],
 
     code: {
@@ -689,6 +745,8 @@ export const animations: AnimationComponent[] = [
     category: "Background Animations",
     technologies: ["react", "svg"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/grid_animations/grid-6.mp4`,
+
     interactions: ["scroll"],
 
     code: {
@@ -729,6 +787,8 @@ export const animations: AnimationComponent[] = [
     category: "Mouse Effects",
     technologies: ["framer-motion", "react"],
     difficulty: "advanced",
+    video: `${R2_BASE_URL}/mouse_effects/mouse-1.mp4`,
+
     interactions: ["mouse"],
 
     code: {
@@ -748,6 +808,8 @@ export const animations: AnimationComponent[] = [
     category: "Mouse Effects",
     technologies: ["framer-motion", "react"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/mouse_effects/mouse-2.mp4`,
+
     interactions: ["mouse"],
     isNew: true,
 
@@ -769,6 +831,8 @@ export const animations: AnimationComponent[] = [
     category: "Mouse Effects",
     technologies: ["react", "css"],
     difficulty: "beginner",
+    video: `${R2_BASE_URL}/mouse_effects/mouse-3.mp4`,
+
     interactions: ["mouse"],
 
     code: {
@@ -788,6 +852,8 @@ export const animations: AnimationComponent[] = [
     category: "Mouse Effects",
     technologies: ["react", "css"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/mouse_effects/mouse-4.mp4`,
+
     interactions: ["mouse"],
 
     code: {
@@ -809,6 +875,8 @@ export const animations: AnimationComponent[] = [
     category: "Scroll Animations",
     technologies: ["framer-motion", "react"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/scroll_animations/scroll-1.mp4`,
+
     interactions: ["scroll"],
     featured: true,
 
@@ -829,6 +897,8 @@ export const animations: AnimationComponent[] = [
     category: "Scroll Animations",
     technologies: ["framer-motion", "react"],
     difficulty: "advanced",
+    video: `${R2_BASE_URL}/scroll_animations/scroll-2.mp4`,
+
     interactions: ["scroll"],
 
     code: {
@@ -848,6 +918,8 @@ export const animations: AnimationComponent[] = [
     category: "Scroll Animations",
     technologies: ["framer-motion", "react"],
     difficulty: "beginner",
+    video: `${R2_BASE_URL}/scroll_animations/scroll-3.mp4`,
+
     interactions: ["scroll"],
 
     code: {
@@ -867,6 +939,8 @@ export const animations: AnimationComponent[] = [
     category: "Scroll Animations",
     technologies: ["framer-motion", "react"],
     difficulty: "advanced",
+    video: `${R2_BASE_URL}/scroll_animations/scroll-4.mp4`,
+
     interactions: ["scroll"],
 
     code: {
@@ -886,6 +960,8 @@ export const animations: AnimationComponent[] = [
     category: "Scroll Animations",
     technologies: ["framer-motion", "react"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/scroll_animations/scroll-5.mp4`,
+
     interactions: ["scroll"],
 
     code: {
@@ -926,6 +1002,8 @@ export const animations: AnimationComponent[] = [
     category: "SVG Animations",
     technologies: ["svg", "react"],
     difficulty: "advanced",
+    video: `${R2_BASE_URL}/webgl_shaders/webgl-1.mp4`,
+
     interactions: ["hover"],
 
     code: {
@@ -945,6 +1023,8 @@ export const animations: AnimationComponent[] = [
     category: "SVG Animations",
     technologies: ["react", "typescript"],
     difficulty: "advanced",
+    video: `${R2_BASE_URL}/webgl_shaders/webgl-2.mp4`,
+
     interactions: ["hover", "mouse"],
 
     code: {
@@ -964,6 +1044,8 @@ export const animations: AnimationComponent[] = [
     category: "SVG Animations",
     technologies: ["svg", "framer-motion"],
     difficulty: "advanced",
+    video: `${R2_BASE_URL}/webgl_shaders/webgl-3.mp4`,
+
     interactions: ["hover"],
     isNew: true,
 
@@ -984,6 +1066,8 @@ export const animations: AnimationComponent[] = [
     category: "SVG Animations",
     technologies: ["svg", "framer-motion"],
     difficulty: "advanced",
+    video: `${R2_BASE_URL}/webgl_shaders/webgl-4.mp4`,
+
     interactions: ["click"],
 
     code: {
@@ -1003,6 +1087,8 @@ export const animations: AnimationComponent[] = [
     category: "SVG Animations",
     technologies: ["framer-motion", "react"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/webgl_shaders/webgl-5.mp4`,
+
     interactions: ["drag"],
 
     code: {
@@ -1022,6 +1108,8 @@ export const animations: AnimationComponent[] = [
     category: "SVG Animations",
     technologies: ["framer-motion", "react"],
     difficulty: "intermediate",
+    video: `${R2_BASE_URL}/webgl_shaders/webgl-6.mp4`,
+
     interactions: ["hover"],
 
     code: {
@@ -1041,6 +1129,8 @@ export const animations: AnimationComponent[] = [
     category: "SVG Animations",
     technologies: ["react", "typescript"],
     difficulty: "advanced",
+    video: `${R2_BASE_URL}/webgl_shaders/webgl-7.mp4`,
+
     interactions: ["hover"],
 
     code: {

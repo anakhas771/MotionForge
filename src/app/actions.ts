@@ -11,7 +11,7 @@ function shuffleArray<T>(array: T[]): T[] {
 
 import fs from "fs";
 import path from "path";
-import { animations } from "@/data/animations";
+import { animations, R2_BASE_URL } from "@/data/animations";
 import { AnimationComponent, Category } from "@/types";
 
 const categoryFolders: Record<string, string> = {
@@ -116,7 +116,7 @@ export async function getVideoManifest(): Promise<
       for (const file of mp4Files) {
         const slug = generateSlugFromFilename(file, folderName);
         const title = generateTitleFromFilename(file);
-        const videoSrc = `/${folderName}/${file}`;
+        const videoSrc = `${R2_BASE_URL}/${folderName}/${file}`;
 
         const zipFilename = file.replace(/\.mp4$/i, ".zip");
         const downloadUrl = `/downloads/${folderName}/${zipFilename}`;
