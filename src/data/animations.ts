@@ -1,5 +1,8 @@
 import { AnimationComponent } from "@/types";
 
+export const R2_BASE_URL =
+  "https://pub-958316778e384500b760d382f88b0c54.r2.dev";
+
 export const animations: AnimationComponent[] = [
   // TEXT (8)
   {
@@ -11,6 +14,7 @@ export const animations: AnimationComponent[] = [
     technologies: ["framer-motion", "react", "typescript"],
     difficulty: "beginner",
     interactions: ["scroll"],
+    // TODO: Map this animation to its verified R2 video file.
     video: "/videos/text-reveal.mp4",
     featured: true,
 
@@ -37,6 +41,7 @@ export const animations: AnimationComponent[] = [
     technologies: ["framer-motion", "react"],
     difficulty: "intermediate",
     interactions: ["scroll"],
+    // TODO: Map this animation to its verified R2 video file.
     video: "/videos/split-text.mp4",
 
     code: {
@@ -57,6 +62,7 @@ export const animations: AnimationComponent[] = [
     technologies: ["react", "typescript"],
     difficulty: "advanced",
     interactions: ["hover"],
+    // TODO: Map this animation to its verified R2 video file.
     video: "/videos/scramble-text.mp4",
     isNew: true,
 
