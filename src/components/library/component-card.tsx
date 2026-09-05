@@ -3,7 +3,7 @@
 import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from "framer-motion";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useState, useRef } from "react";
+import { Suspense, useRef } from "react";
 import { AnimationComponent } from "@/types";
 import { VideoPreview } from "./video-preview";
 import { useReducedMotion, useIsMobile } from "@/hooks/use-media-query";
@@ -196,17 +196,20 @@ function ComponentCardContent({ component }: ComponentCardProps) {
   const isMobile = useIsMobile();
   const disableWobble = prefersReducedMotion || isMobile;
 
-  const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
   // Motion values for tracking cursor relative to card center [-1, 1]
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+  const hoverScale = useMotionValue(1);
+  const highlightOpacity = useMotionValue(0);
 
   // Smooth springs for a natural feel
   const springConfig = { stiffness: 400, damping: 30 };
   const smoothX = useSpring(x, springConfig);
   const smoothY = useSpring(y, springConfig);
+  const scale = useSpring(hoverScale, springConfig);
+  const smoothHighlightOpacity = useSpring(highlightOpacity, springConfig);
 
   // Outer tilt
   const rotateX = useTransform(smoothY, [-1, 1], [5, -5]);
@@ -236,15 +239,17 @@ function ComponentCardContent({ component }: ComponentCardProps) {
   };
 
   const handlePointerLeave = (e: React.PointerEvent<HTMLDivElement>) => {
-    setIsHovered(false);
     if (disableWobble || e.pointerType === "touch") return;
     x.set(0);
     y.set(0);
+    hoverScale.set(1);
+    highlightOpacity.set(0);
   };
 
   const handlePointerEnter = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType === "touch") return;
-    setIsHovered(true);
+    if (e.pointerType === "touch" || disableWobble) return;
+    hoverScale.set(1.02);
+    highlightOpacity.set(1);
   };
 
   return (
@@ -256,31 +261,31 @@ function ComponentCardContent({ component }: ComponentCardProps) {
       onPointerLeave={handlePointerLeave}
       style={{ perspective: "1000px" }}
     >
-      <Link href={href} className="block w-full h-full">
+      <Link href={href} prefetch={false} className="block w-full h-full">
         <motion.div
           className={cn(
             "rounded-xl border border-border bg-card shadow-sm hover:shadow-xl transition-[shadow,border-color] duration-300 relative"
           )}
           style={{
-            rotateX,
-            rotateY,
-            scale: isHovered && !disableWobble ? 1.02 : 1,
+            rotateX: disableWobble ? 0 : rotateX,
+            rotateY: disableWobble ? 0 : rotateY,
+            scale: disableWobble ? 1 : scale,
             transformStyle: "preserve-3d",
           }}
           transition={{ duration: 0.2 }}
         >
           {/* Subtle pointer-following highlight */}
-          {!disableWobble && isHovered && (
+          {!disableWobble && (
             <motion.div
               className="absolute inset-0 z-10 pointer-events-none rounded-xl"
-              style={{ background: highlightBackground }}
+              style={{ background: highlightBackground, opacity: smoothHighlightOpacity }}
             />
           )}
 
           <motion.div
             style={{
-              x: innerTranslateX,
-              y: innerTranslateY,
+              x: disableWobble ? 0 : innerTranslateX,
+              y: disableWobble ? 0 : innerTranslateY,
             }}
             className="w-full h-full flex flex-col overflow-hidden rounded-xl bg-card"
           >
@@ -294,20 +299,11 @@ function ComponentCardContent({ component }: ComponentCardProps) {
 
               {/* Download indicator */}
               {component.hasDownload && (
-                <motion.div
-                  className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1.5 z-20"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileHover={{ opacity: 1, scale: 1 }}
-                >
-                  <motion.span
-                    className="text-xs font-medium text-accent"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.1 }}
-                  >
+                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1.5 z-20">
+                  <span className="text-xs font-medium text-accent">
                     Download available
-                  </motion.span>
-                </motion.div>
+                  </span>
+                </div>
               )}
             </div>
 
