@@ -128,16 +128,14 @@ function LibraryContent() {
       {/* Main Layout */}
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Fixed Sidebar */}
-            <aside className="hidden lg:block lg:w-64 lg:shrink-0">
-              <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto scrollbar-thin">
-                <FilterSidebar
-                  activeCategory={activeCategory}
-                  onCategoryChange={setActiveCategory}
-                  onSearchClick={() => setSearchOpen(true)}
-                  componentCount={filteredComponents.length}
-                />
-              </div>
-            </aside>
+            <div className="hidden lg:block">
+              <FilterSidebar
+                activeCategory={activeCategory}
+                onCategoryChange={setActiveCategory}
+                onSearchClick={() => setSearchOpen(true)}
+                componentCount={filteredComponents.length}
+              />
+            </div>
 
             {/* Animation Grid */}
             <div className="flex-1 min-w-0">

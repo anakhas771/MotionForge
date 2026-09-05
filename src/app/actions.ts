@@ -304,7 +304,7 @@ const downloadFiles: Record<string, string[]> = {
   ],
 
   hover_effect: [
-    "hover-.4.zip",
+    "hover-4.zip",
     "hover-1.zip",
     "hover-2.zip",
     "hover-3.zip",
@@ -435,6 +435,13 @@ export async function getVideoManifest(): Promise<
 
       const hasDownload =
         availableDownloads.includes(zipFilename);
+
+      if (!hasDownload && availableDownloads.includes(file.replace(/\.mp4$/i, ".zip"))) {
+        // Technically nothing here would change, it already checks.
+      } else if (!hasDownload && availableDownloads.some(df => df.includes(file.replace(".mp4", "")))) {
+          console.log(`Potential download match check failed for: ${file} vs ${zipFilename} in ${folderName}`);
+      }
+
 
       const downloadUrl = hasDownload
         ? `${R2_BASE_URL}/downloads/${folderName}/${encodeURIComponent(

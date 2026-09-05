@@ -209,20 +209,20 @@ function ComponentCardContent({ component }: ComponentCardProps) {
   const smoothY = useSpring(y, springConfig);
 
   // Outer tilt
-  const rotateX = useTransform(smoothY, [-1, 1], [4, -4]);
-  const rotateY = useTransform(smoothX, [-1, 1], [-4, 4]);
+  const rotateX = useTransform(smoothY, [-1, 1], [5, -5]);
+  const rotateY = useTransform(smoothX, [-1, 1], [-5, 5]);
 
   // Subtle inner counter-parallax
-  const innerTranslateX = useTransform(smoothX, [-1, 1], [6, -6]);
-  const innerTranslateY = useTransform(smoothY, [-1, 1], [6, -6]);
+  const innerTranslateX = useTransform(smoothX, [-1, 1], [5, -5]);
+  const innerTranslateY = useTransform(smoothY, [-1, 1], [5, -5]);
 
   // Optional subtle highlight
   const mouseXStr = useTransform(smoothX, (val) => `${((val + 1) / 2) * 100}%`);
   const mouseYStr = useTransform(smoothY, (val) => `${((val + 1) / 2) * 100}%`);
   const highlightBackground = useMotionTemplate`radial-gradient(circle at ${mouseXStr} ${mouseYStr}, rgba(255,255,255,0.06), transparent 50%)`;
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (disableWobble || !cardRef.current) return;
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (disableWobble || e.pointerType === "touch" || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
@@ -235,14 +235,15 @@ function ComponentCardContent({ component }: ComponentCardProps) {
     y.set(normalizedY);
   };
 
-  const handleMouseLeave = () => {
+  const handlePointerLeave = (e: React.PointerEvent<HTMLDivElement>) => {
     setIsHovered(false);
-    if (disableWobble) return;
+    if (disableWobble || e.pointerType === "touch") return;
     x.set(0);
     y.set(0);
   };
 
-  const handleMouseEnter = () => {
+  const handlePointerEnter = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "touch") return;
     setIsHovered(true);
   };
 
@@ -250,9 +251,10 @@ function ComponentCardContent({ component }: ComponentCardProps) {
     <div
       className={cn("block group cursor-pointer", !disableWobble && "perspective-[1000px]")}
       ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onPointerMove={handlePointerMove}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
+      style={{ perspective: "1000px" }}
     >
       <Link href={href} className="block w-full h-full">
         <motion.div
@@ -260,10 +262,10 @@ function ComponentCardContent({ component }: ComponentCardProps) {
             "rounded-xl border border-border bg-card shadow-sm hover:shadow-xl transition-[shadow,border-color] duration-300 relative"
           )}
           style={{
-            rotateX: disableWobble ? 0 : rotateX,
-            rotateY: disableWobble ? 0 : rotateY,
+            rotateX,
+            rotateY,
             scale: isHovered && !disableWobble ? 1.02 : 1,
-            transformStyle: disableWobble ? "flat" : "preserve-3d",
+            transformStyle: "preserve-3d",
           }}
           transition={{ duration: 0.2 }}
         >
@@ -277,8 +279,8 @@ function ComponentCardContent({ component }: ComponentCardProps) {
 
           <motion.div
             style={{
-              x: disableWobble ? 0 : innerTranslateX,
-              y: disableWobble ? 0 : innerTranslateY,
+              x: innerTranslateX,
+              y: innerTranslateY,
             }}
             className="w-full h-full flex flex-col overflow-hidden rounded-xl bg-card"
           >
