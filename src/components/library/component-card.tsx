@@ -1,11 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useRef } from "react";
 import { AnimationComponent } from "@/types";
 import { VideoPreview } from "./video-preview";
+import { useReducedMotion, useIsMobile } from "@/hooks/use-media-query";
 import { cn } from "@/utils/cn";
 
 interface ComponentCardProps {
@@ -191,42 +192,114 @@ function ComponentCardContent({ component }: ComponentCardProps) {
   const queryString = searchParams.toString();
   const href = `/code/${component.slug}${queryString ? `?${queryString}` : ""}`;
 
+  const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const disableWobble = prefersReducedMotion || isMobile;
+
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Motion values for tracking cursor relative to card center [-1, 1]
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const hoverScale = useMotionValue(1);
+
+  // Smooth springs for a natural feel
+  const springConfig = { stiffness: 400, damping: 30 };
+  const smoothX = useSpring(x, springConfig);
+  const smoothY = useSpring(y, springConfig);
+  const scale = useSpring(hoverScale, springConfig);
+
+  // Outer tilt (~5 degrees)
+  const rotateX = useTransform(smoothY, [-1, 1], [5, -5]);
+  const rotateY = useTransform(smoothX, [-1, 1], [-5, 5]);
+
+  // Subtle inner counter-parallax
+  const innerTranslateX = useTransform(smoothX, [-1, 1], [5, -5]);
+  const innerTranslateY = useTransform(smoothY, [-1, 1], [5, -5]);
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (disableWobble || e.pointerType === "touch" || !cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    // Output mapped from -1 to 1 based on position from center
+    const normalizedX = (e.clientX - centerX) / (rect.width / 2);
+    const normalizedY = (e.clientY - centerY) / (rect.height / 2);
+
+    x.set(normalizedX);
+    y.set(normalizedY);
+  };
+
+  const handlePointerLeave = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (disableWobble || e.pointerType === "touch") return;
+    x.set(0);
+    y.set(0);
+    hoverScale.set(1);
+  };
+
+  const handlePointerEnter = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "touch" || disableWobble) return;
+    hoverScale.set(1.02);
+  };
+
   return (
-    <div className="block group cursor-pointer">
+    <div
+      className="block group cursor-pointer"
+      ref={cardRef}
+      onPointerMove={handlePointerMove}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
+      style={{ perspective: disableWobble ? "none" : "1000px" }}
+    >
       <Link href={href} prefetch={false} className="block w-full h-full">
-        <div
+        <motion.div
           className={cn(
-            "rounded-xl border border-border bg-card shadow-sm hover:shadow-xl transition-all duration-300 relative w-full h-full flex flex-col overflow-hidden hover:scale-[1.02]"
+            "rounded-xl border border-border bg-card shadow-sm hover:shadow-xl transition-[shadow,border-color] duration-300 relative w-full h-full"
           )}
+          style={disableWobble ? {} : {
+            rotateX,
+            rotateY,
+            scale,
+            transformStyle: "preserve-3d",
+          }}
         >
-          {/* Preview Area */}
-          <div className="aspect-[4/3] bg-surface relative flex items-center justify-center text-foreground/60 overflow-hidden">
-            <VideoPreview
-              videoSrc={component.video}
-              fallback={getCategoryPreview(component.category)}
-              className="w-full h-full flex items-center justify-center"
-            />
+          <motion.div
+            style={disableWobble ? {} : {
+              x: innerTranslateX,
+              y: innerTranslateY,
+            }}
+            className="w-full h-full flex flex-col overflow-hidden rounded-xl bg-card"
+          >
+            {/* Preview Area */}
+            <div className="aspect-[4/3] bg-surface relative flex items-center justify-center text-foreground/60 overflow-hidden">
+              <VideoPreview
+                videoSrc={component.video}
+                fallback={getCategoryPreview(component.category)}
+                className="w-full h-full flex items-center justify-center"
+              />
 
-            {/* Download indicator */}
-            {component.hasDownload && (
-              <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1.5 z-20">
-                <span className="text-xs font-medium text-accent">
-                  Download available
-                </span>
-              </div>
-            )}
-          </div>
+              {/* Download indicator */}
+              {component.hasDownload && (
+                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1.5 z-20">
+                  <span className="text-xs font-medium text-accent">
+                    Download available
+                  </span>
+                </div>
+              )}
+            </div>
 
-          {/* Info Footer - always visible */}
-          <div className="p-4 border-t border-border/40 relative z-20 bg-card">
-            <h3 className="text-sm font-medium text-foreground mb-1 truncate">
-              {component.name}
-            </h3>
-            <p className="text-xs text-muted line-clamp-2">
-              {component.description}
-            </p>
-          </div>
-        </div>
+            {/* Info Footer - always visible */}
+            <div className="p-4 border-t border-border/40 relative z-20 bg-card">
+              <h3 className="text-sm font-medium text-foreground mb-1 truncate">
+                {component.name}
+              </h3>
+              <p className="text-xs text-muted line-clamp-2">
+                {component.description}
+              </p>
+            </div>
+          </motion.div>
+        </motion.div>
       </Link>
     </div>
   );
