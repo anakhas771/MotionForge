@@ -1,12 +1,11 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useRef } from "react";
+import { Suspense } from "react";
 import { AnimationComponent } from "@/types";
 import { VideoPreview } from "./video-preview";
-import { useReducedMotion, useIsMobile } from "@/hooks/use-media-query";
 import { cn } from "@/utils/cn";
 
 interface ComponentCardProps {
@@ -192,132 +191,42 @@ function ComponentCardContent({ component }: ComponentCardProps) {
   const queryString = searchParams.toString();
   const href = `/code/${component.slug}${queryString ? `?${queryString}` : ""}`;
 
-  const prefersReducedMotion = useReducedMotion();
-  const isMobile = useIsMobile();
-  const disableWobble = prefersReducedMotion || isMobile;
-
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  // Motion values for tracking cursor relative to card center [-1, 1]
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const hoverScale = useMotionValue(1);
-  const highlightOpacity = useMotionValue(0);
-
-  // Smooth springs for a natural feel
-  const springConfig = { stiffness: 400, damping: 30 };
-  const smoothX = useSpring(x, springConfig);
-  const smoothY = useSpring(y, springConfig);
-  const scale = useSpring(hoverScale, springConfig);
-  const smoothHighlightOpacity = useSpring(highlightOpacity, springConfig);
-
-  // Outer tilt
-  const rotateX = useTransform(smoothY, [-1, 1], [5, -5]);
-  const rotateY = useTransform(smoothX, [-1, 1], [-5, 5]);
-
-  // Subtle inner counter-parallax
-  const innerTranslateX = useTransform(smoothX, [-1, 1], [5, -5]);
-  const innerTranslateY = useTransform(smoothY, [-1, 1], [5, -5]);
-
-  // Optional subtle highlight
-  const mouseXStr = useTransform(smoothX, (val) => `${((val + 1) / 2) * 100}%`);
-  const mouseYStr = useTransform(smoothY, (val) => `${((val + 1) / 2) * 100}%`);
-  const highlightBackground = useMotionTemplate`radial-gradient(circle at ${mouseXStr} ${mouseYStr}, rgba(255,255,255,0.06), transparent 50%)`;
-
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (disableWobble || e.pointerType === "touch" || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    // Output mapped from -1 to 1 based on position from center
-    const normalizedX = (e.clientX - centerX) / (rect.width / 2);
-    const normalizedY = (e.clientY - centerY) / (rect.height / 2);
-
-    x.set(normalizedX);
-    y.set(normalizedY);
-  };
-
-  const handlePointerLeave = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (disableWobble || e.pointerType === "touch") return;
-    x.set(0);
-    y.set(0);
-    hoverScale.set(1);
-    highlightOpacity.set(0);
-  };
-
-  const handlePointerEnter = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType === "touch" || disableWobble) return;
-    hoverScale.set(1.02);
-    highlightOpacity.set(1);
-  };
-
   return (
-    <div
-      className={cn("block group cursor-pointer", !disableWobble && "perspective-[1000px]")}
-      ref={cardRef}
-      onPointerMove={handlePointerMove}
-      onPointerEnter={handlePointerEnter}
-      onPointerLeave={handlePointerLeave}
-      style={{ perspective: "1000px" }}
-    >
+    <div className="block group cursor-pointer">
       <Link href={href} prefetch={false} className="block w-full h-full">
-        <motion.div
+        <div
           className={cn(
-            "rounded-xl border border-border bg-card shadow-sm hover:shadow-xl transition-[shadow,border-color] duration-300 relative"
+            "rounded-xl border border-border bg-card shadow-sm hover:shadow-xl transition-all duration-300 relative w-full h-full flex flex-col overflow-hidden hover:scale-[1.02]"
           )}
-          style={{
-            rotateX: disableWobble ? 0 : rotateX,
-            rotateY: disableWobble ? 0 : rotateY,
-            scale: disableWobble ? 1 : scale,
-            transformStyle: "preserve-3d",
-          }}
-          transition={{ duration: 0.2 }}
         >
-          {/* Subtle pointer-following highlight */}
-          {!disableWobble && (
-            <motion.div
-              className="absolute inset-0 z-10 pointer-events-none rounded-xl"
-              style={{ background: highlightBackground, opacity: smoothHighlightOpacity }}
+          {/* Preview Area */}
+          <div className="aspect-[4/3] bg-surface relative flex items-center justify-center text-foreground/60 overflow-hidden">
+            <VideoPreview
+              videoSrc={component.video}
+              fallback={getCategoryPreview(component.category)}
+              className="w-full h-full flex items-center justify-center"
             />
-          )}
 
-          <motion.div
-            style={{
-              x: disableWobble ? 0 : innerTranslateX,
-              y: disableWobble ? 0 : innerTranslateY,
-            }}
-            className="w-full h-full flex flex-col overflow-hidden rounded-xl bg-card"
-          >
-            {/* Preview Area */}
-            <div className="aspect-[4/3] bg-surface relative flex items-center justify-center text-foreground/60 transition-colors overflow-hidden">
-              <VideoPreview
-                videoSrc={component.video}
-                fallback={getCategoryPreview(component.category)}
-                className="w-full h-full flex items-center justify-center"
-              />
+            {/* Download indicator */}
+            {component.hasDownload && (
+              <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1.5 z-20">
+                <span className="text-xs font-medium text-accent">
+                  Download available
+                </span>
+              </div>
+            )}
+          </div>
 
-              {/* Download indicator */}
-              {component.hasDownload && (
-                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1.5 z-20">
-                  <span className="text-xs font-medium text-accent">
-                    Download available
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Info Footer - always visible */}
-            <div className="p-4 border-t border-border/40 relative z-20 bg-card">
-              <h3 className="text-sm font-medium text-foreground mb-1 truncate">
-                {component.name}
-              </h3>
-              <p className="text-xs text-muted line-clamp-2">
-                {component.description}
-              </p>
-            </div>
-          </motion.div>
-        </motion.div>
+          {/* Info Footer - always visible */}
+          <div className="p-4 border-t border-border/40 relative z-20 bg-card">
+            <h3 className="text-sm font-medium text-foreground mb-1 truncate">
+              {component.name}
+            </h3>
+            <p className="text-xs text-muted line-clamp-2">
+              {component.description}
+            </p>
+          </div>
+        </div>
       </Link>
     </div>
   );
