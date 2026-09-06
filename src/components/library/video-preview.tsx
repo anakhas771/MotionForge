@@ -3,34 +3,63 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/utils/cn";
 
-type LifecycleCallback = (isIntersecting: boolean) => void;
-const preloadCallbacks = new WeakMap<Element, LifecycleCallback>();
-const visibleCallbacks = new WeakMap<Element, LifecycleCallback>();
+// --- Module-level singleton observers ---
+// Two observers: one for preloading (wider margin) and one for visible playback
+// Created lazily at runtime so SSR never touches them.
+let preloadObserver: IntersectionObserver | null = null;
+let visibleObserver: IntersectionObserver | null = null;
 
-let sharedObserver: IntersectionObserver | null = null;
+// WeakMaps so garbage collection works naturally when cards unmount
+const preloadRegistry = new WeakMap<Element, () => void>();
+const visibleRegistry = new WeakMap<Element, (visible: boolean) => void>();
+
+// Mobile: only one video plays at a time
 let activeMobileVideo: HTMLVideoElement | null = null;
 
-function getSharedObserver() {
-  if (typeof window === "undefined") return null;
-  if (!sharedObserver) {
-    // ONE shared IntersectionObserver for the entire application
-    sharedObserver = new IntersectionObserver(
+function isMobile() {
+  return typeof window !== "undefined" && window.innerWidth < 768;
+}
+
+function getPreloadObserver(): IntersectionObserver {
+  if (!preloadObserver) {
+    const margin = isMobile() ? "200px 0px" : "400px 0px";
+    preloadObserver = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.target.hasAttribute("data-preload")) {
-            const cb = preloadCallbacks.get(entry.target);
-            if (cb) cb(entry.isIntersecting);
-          } else {
-            const cb = visibleCallbacks.get(entry.target);
-            if (cb) cb(entry.isIntersecting);
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const cb = preloadRegistry.get(entry.target);
+            if (cb) {
+              cb();
+              // Fire once only — unobserve after triggering
+              preloadObserver?.unobserve(entry.target);
+            }
           }
-        });
+        }
       },
-      { rootMargin: "0px 0px", threshold: 0 }
+      { rootMargin: margin, threshold: 0 }
     );
   }
-  return sharedObserver;
+  return preloadObserver;
 }
+
+function getVisibleObserver(): IntersectionObserver {
+  if (!visibleObserver) {
+    visibleObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const cb = visibleRegistry.get(entry.target);
+          if (cb) cb(entry.isIntersecting);
+        }
+      },
+      { rootMargin: "0px", threshold: 0 }
+    );
+  }
+  return visibleObserver;
+}
+
+// ---
+
+type VideoState = "idle" | "loading" | "ready" | "error";
 
 interface VideoPreviewProps {
   videoSrc?: string;
@@ -39,120 +68,129 @@ interface VideoPreviewProps {
 }
 
 export function VideoPreview({ videoSrc, fallback, className }: VideoPreviewProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const visibleRef = useRef<HTMLDivElement>(null);
-  const preloadRef = useRef<HTMLDivElement>(null);
 
-  const [shouldLoad, setShouldLoad] = useState(false);
-  const [isVideoReady, setIsVideoReady] = useState(false);
-  
+  // sourceLoaded ensures we only assign src once
+  const sourceLoadedRef = useRef(false);
+  // visible ref avoids stale closures in event handlers
   const isVisibleRef = useRef(false);
 
-  const tryPlay = () => {
+  const [videoState, setVideoState] = useState<VideoState>("idle");
+
+  // tryPlay: call whenever visibility OR readyState might have changed
+  function tryPlay() {
     const video = videoRef.current;
     if (!video || !isVisibleRef.current) return;
+    // HAVE_CURRENT_DATA (2) is enough to start playback
+    if (video.readyState < 2) return;
 
-    // 3 = HAVE_FUTURE_DATA
-    if (video.readyState >= 3) {
-      if (window.innerWidth < 768) {
-        if (activeMobileVideo && activeMobileVideo !== video) {
-          activeMobileVideo.pause();
-        }
-        activeMobileVideo = video;
+    if (isMobile()) {
+      // Pause the previous mobile video
+      if (activeMobileVideo && activeMobileVideo !== video) {
+        activeMobileVideo.pause();
       }
-      video.play().catch(() => {});
+      activeMobileVideo = video;
     }
-  };
+    video.play().catch(() => {/* browser policy rejection – ignore silently */});
+  }
 
   useEffect(() => {
-    const vEl = visibleRef.current;
-    const pEl = preloadRef.current;
-    if (!vEl || !pEl) return;
+    const container = containerRef.current;
+    if (!container || !videoSrc) return;
 
-    const observer = getSharedObserver();
+    const pObs = getPreloadObserver();
+    const vObs = getVisibleObserver();
 
-    preloadCallbacks.set(pEl, (isIntersecting) => {
-      if (isIntersecting) setShouldLoad(true);
+    // --- Preload callback: assign src once ---
+    preloadRegistry.set(container, () => {
+      if (sourceLoadedRef.current) return;
+      const video = videoRef.current;
+      if (!video) return;
+
+      sourceLoadedRef.current = true;
+      setVideoState("loading");
+
+      // Directly set src on the DOM element — bypasses React render cycle
+      video.src = videoSrc;
+      video.load();
     });
 
-    visibleCallbacks.set(vEl, (isIntersecting) => {
-      isVisibleRef.current = isIntersecting;
+    // --- Visible callback: play / pause ---
+    visibleRegistry.set(container, (visible: boolean) => {
+      isVisibleRef.current = visible;
       const video = videoRef.current;
-      
-      if (video) {
-        if (isIntersecting) {
-          tryPlay();
-        } else {
-          video.pause();
-          if (activeMobileVideo === video) {
-            activeMobileVideo = null;
-          }
+      if (!video) return;
+
+      if (visible) {
+        tryPlay();
+      } else {
+        video.pause();
+        if (activeMobileVideo === video) {
+          activeMobileVideo = null;
         }
       }
     });
 
-    if (observer) {
-      observer.observe(pEl);
-      observer.observe(vEl);
-    }
+    pObs.observe(container);
+    vObs.observe(container);
 
-    const videoEl = videoRef.current;
+    const capturedContainer = container;
+    const capturedVideo = videoRef.current;
 
     return () => {
-      preloadCallbacks.delete(pEl);
-      visibleCallbacks.delete(vEl);
-      if (observer) {
-        observer.unobserve(pEl);
-        observer.unobserve(vEl);
-      }
-      if (activeMobileVideo === videoEl) {
+      preloadRegistry.delete(capturedContainer);
+      visibleRegistry.delete(capturedContainer);
+      pObs.unobserve(capturedContainer);
+      vObs.unobserve(capturedContainer);
+      if (activeMobileVideo === capturedVideo) {
         activeMobileVideo = null;
       }
     };
-  }, []);
+  }, [videoSrc]);
 
-  const handleReady = () => {
-    if (!isVideoReady) setIsVideoReady(true);
+  function handleLoadedData() {
+    setVideoState("ready");
     tryPlay();
-  };
+  }
 
-  const handleError = () => {
-    setIsVideoReady(false);
-  };
+  function handleCanPlay() {
+    if (videoState !== "ready") setVideoState("ready");
+    tryPlay();
+  }
+
+  function handleError() {
+    setVideoState("error");
+  }
+
+  const showVideo = videoState === "ready";
+  const showFallback = videoState !== "ready"; // idle | loading | error
 
   return (
-    <div ref={visibleRef} className={cn("relative w-full h-full", className)}>
-      {/* CSS-driven preload boundaries (150px mobile, 400px desktop) */}
-      <div 
-        ref={preloadRef} 
-        data-preload
-        className="absolute w-full pointer-events-none -top-[150px] -bottom-[150px] md:-top-[400px] md:-bottom-[400px] z-[-1]"
-      />
-
-      {/* Placeholder / Fallback */}
+    <div ref={containerRef} className={cn("relative w-full h-full", className)}>
+      {/* Fallback / placeholder */}
       <div
         className={cn(
-          "absolute inset-0 flex items-center justify-center transition-opacity duration-150",
-          isVideoReady ? "opacity-0" : "opacity-100"
+          "absolute inset-0 z-10 flex items-center justify-center transition-opacity duration-150",
+          showFallback ? "opacity-100" : "opacity-0 pointer-events-none"
         )}
       >
         {fallback}
       </div>
 
-      {/* Video */}
+      {/* Video — always in DOM, src set imperatively via ref */}
       <video
         ref={videoRef}
-        src={shouldLoad && videoSrc ? videoSrc : undefined}
         preload="metadata"
         muted
         loop
         playsInline
-        onLoadedData={handleReady}
-        onCanPlay={handleReady}
+        onLoadedData={handleLoadedData}
+        onCanPlay={handleCanPlay}
         onError={handleError}
         className={cn(
-          "absolute inset-0 w-full h-full object-cover transition-opacity duration-150",
-          isVideoReady ? "opacity-100" : "opacity-0"
+          "absolute inset-0 z-20 w-full h-full object-cover transition-opacity duration-150",
+          showVideo ? "opacity-100" : "opacity-0"
         )}
       />
     </div>
