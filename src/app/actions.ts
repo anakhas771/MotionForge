@@ -423,7 +423,7 @@ export async function getVideoManifest(): Promise<
       const title =
         generateTitleFromFilename(file);
 
-      const encodedFile = encodeURIComponent(file);
+      const encodedFile = encodeURIComponent(file).replace(/\(/g, '%28').replace(/\)/g, '%29');
 
       const videoSrc =
         `${R2_BASE_URL}/${folderName}/${encodedFile}`;
