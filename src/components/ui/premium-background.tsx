@@ -46,21 +46,21 @@ export function PremiumBackground() {
 
       {/* Large soft radial light fields */}
       <div
-        className={`gradient-orb-1 absolute -top-[20%] -left-[10%] w-[900px] h-[900px] rounded-full opacity-[0.12] blur-[140px] transition-transform duration-1000 ease-out`}
+        className={`gradient-orb-1 absolute -top-[20%] -left-[10%] w-[900px] h-[900px] rounded-full opacity-[0.05] md:opacity-[0.12] blur-[60px] md:blur-[140px] transition-transform duration-1000 ease-out`}
         style={{
           background: "radial-gradient(circle at center, rgba(167,139,250,0.35) 0%, rgba(167,139,250,0.05) 50%, transparent 70%)",
           animation: disableAnimation ? "none" : "float1 22s ease-in-out infinite",
         }}
       />
       <div
-        className={`gradient-orb-2 absolute top-[30%] -right-[15%] w-[700px] h-[700px] rounded-full opacity-[0.10] blur-[120px] transition-transform duration-1000 ease-out`}
+        className={`gradient-orb-2 absolute top-[30%] -right-[15%] w-[700px] h-[700px] rounded-full opacity-[0.04] md:opacity-[0.10] blur-[50px] md:blur-[120px] transition-transform duration-1000 ease-out`}
         style={{
           background: "radial-gradient(circle at center, rgba(96,165,250,0.30) 0%, rgba(96,165,250,0.05) 50%, transparent 70%)",
           animation: disableAnimation ? "none" : "float2 28s ease-in-out infinite",
         }}
       />
       <div
-        className={`gradient-orb-3 absolute -bottom-[10%] left-[20%] w-[800px] h-[800px] rounded-full opacity-[0.08] blur-[130px] transition-transform duration-1000 ease-out`}
+        className={`gradient-orb-3 absolute -bottom-[10%] left-[20%] w-[800px] h-[800px] rounded-full opacity-[0.03] md:opacity-[0.08] blur-[50px] md:blur-[130px] transition-transform duration-1000 ease-out`}
         style={{
           background: "radial-gradient(circle at center, rgba(129,140,248,0.30) 0%, rgba(129,140,248,0.05) 50%, transparent 70%)",
           animation: disableAnimation ? "none" : "float3 32s ease-in-out infinite",

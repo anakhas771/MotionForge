@@ -1,15 +1,10 @@
-"use client";
-import { motion } from "framer-motion";
 import Link from "next/link";
-import { useIntersection } from "@/hooks/use-intersection";
 import { Section } from "@/components/ui/section";
 import { Container } from "@/components/ui/container";
 import { ComponentCard } from "@/components/library/component-card";
 import { AnimationComponent } from "@/types";
 
 export function ShowcaseGrid({ animations }: { animations: AnimationComponent[] }) {
-  const [ref, isVisible] = useIntersection<HTMLDivElement>();
-
   return (
     <Section className="bg-surface/30">
       <Container>
@@ -22,17 +17,11 @@ export function ShowcaseGrid({ animations }: { animations: AnimationComponent[] 
           </p>
         </div>
 
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-          transition={{ duration: 0.8 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {animations.map((comp) => (
             <ComponentCard key={comp.id} component={comp} />
           ))}
-        </motion.div>
+        </div>
 
         <div className="text-center mt-12">
           <Link

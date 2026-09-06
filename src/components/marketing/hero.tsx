@@ -48,7 +48,7 @@ const particles = [
         {particles.map((el) => (
           <motion.div
             key={el.id}
-            className="absolute"
+            className="absolute hidden md:block"
             style={{
               left: `${el.x}%`,
               top: `${el.y}%`,
@@ -85,59 +85,39 @@ const particles = [
       {/* Main Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 text-center space-y-8">
         {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-block"
-        >
+        <div className="inline-block opacity-0 animate-fade-in-up animate-delay-200">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50 backdrop-blur-sm text-sm shimmer">
             <span className="text-accent">✦</span>
             <span className="text-muted">50+ Production-Ready Animations</span>
           </div>
-        </motion.div>
+        </div>
 
         {/* Hero Heading */}
         <div className="space-y-2 relative z-10">
-          <AnimatedLine text={heroText.line1} delay={0.2} />
+          <AnimatedLine text={heroText.line1} delayClass="animate-delay-200" />
           <AnimatedLine
             text={heroText.line2}
-            delay={0.5}
+            delayClass="animate-delay-500"
             className="gradient-text text-pulse-gradient"
           />
         </div>
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="text-xl md:text-2xl text-muted/90 max-w-2xl mx-auto leading-relaxed relative z-10"
-        >
+        <p className="text-xl md:text-2xl text-muted/90 max-w-2xl mx-auto leading-relaxed relative z-10 opacity-0 animate-fade-in-up animate-delay-1000">
           A premium collection of production-ready React animations and
           interactive UI components.
-        </motion.p>
+        </p>
 
         {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10 pt-4"
-        >
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10 pt-4 opacity-0 animate-fade-in-up animate-delay-1200">
           <Button asChild size="lg" className="rounded-full shadow-[0_0_40px_-10px_rgba(167,139,250,0.4)] hover:shadow-[0_0_60px_-10px_rgba(167,139,250,0.6)] transition-all">
             <Link href="/library">Explore Library</Link>
           </Button>
-        </motion.div>
+        </div>
         {/* Trust Strip */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.4 }}
-          className="text-sm text-muted/70"
-        >
+        <p className="text-sm text-muted/70 opacity-0 animate-fade-in-up animate-delay-1200">
           Completely free · Open source · 50+ components
-        </motion.p>
+        </p>
       </div>
 
       {/* Bottom Decorative Line */}
@@ -153,38 +133,22 @@ const particles = [
 
 function AnimatedLine({
   text,
-  delay,
+  delayClass,
   className,
 }: {
   text: string;
-  delay: number;
+  delayClass: string;
   className?: string;
 }) {
-  const chars = text.split("");
-
   return (
     <h1
       className={cn(
-        "text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight",
+        "text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight opacity-0 animate-fade-in-up",
+        delayClass,
         className
       )}
     >
-      {chars.map((char, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 60, rotateX: -40 }}
-          animate={{ opacity: 1, y: 0, rotateX: 0 }}
-          transition={{
-            type: "spring",
-            stiffness: 120,
-            damping: 14,
-            delay: delay + i * 0.02,
-          }}
-          style={{ display: "inline-block" }}
-        >
-          {char === " " ? " " : char}
-        </motion.span>
-      ))}
+      {text}
     </h1>
   );
 }
