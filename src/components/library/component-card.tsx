@@ -280,13 +280,17 @@ function ComponentCardContent({ component }: ComponentCardProps) {
               />
 
               {/* Download indicator */}
-              {component.hasDownload && (
-                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1.5 z-20">
+              <div className="absolute top-3 right-3 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1.5 z-20 border border-border/50">
+                {component.hasDownload ? (
                   <span className="text-xs font-medium text-accent">
-                    Download available
+                    ZIP Available
                   </span>
-                </div>
-              )}
+                ) : (
+                  <span className="text-xs font-medium text-muted flex items-center gap-1">
+                    <span aria-hidden="true">🔒</span> Locked
+                  </span>
+                )}
+              </div>
             </div>
 
             {/* Info Footer - always visible */}

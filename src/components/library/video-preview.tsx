@@ -123,22 +123,20 @@ export function VideoPreview({ videoSrc, fallback, className }: VideoPreviewProp
       </div>
 
       {/* Video */}
-      {shouldLoad && videoSrc && (
-        <video
-          ref={videoRef}
-          src={videoSrc}
-          preload="metadata"
-          muted
-          loop
-          playsInline
-          onLoadedData={handleReady}
-          onCanPlay={handleReady}
-          className={cn(
-            "absolute inset-0 w-full h-full object-cover transition-opacity duration-150",
-            isVideoReady ? "opacity-100" : "opacity-0"
-          )}
-        />
-      )}
+      <video
+        ref={videoRef}
+        src={shouldLoad && videoSrc ? videoSrc : undefined}
+        preload="metadata"
+        muted
+        loop
+        playsInline
+        onLoadedData={handleReady}
+        onCanPlay={handleReady}
+        className={cn(
+          "absolute inset-0 w-full h-full object-cover transition-opacity duration-150",
+          isVideoReady ? "opacity-100" : "opacity-0"
+        )}
+      />
     </div>
   );
 }
