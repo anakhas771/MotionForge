@@ -24,3 +24,7 @@ export function useIsMobile() {
 export function useReducedMotion() {
   return useMediaQuery("(prefers-reduced-motion: reduce)");
 }
+
+export function useIsTouchDevice() {
+  return useMediaQuery("(hover: none) and (pointer: coarse)");
+}

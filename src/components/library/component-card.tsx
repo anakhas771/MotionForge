@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useRef } from "react";
 import { AnimationComponent } from "@/types";
 import { VideoPreview } from "./video-preview";
-import { useReducedMotion, useIsMobile } from "@/hooks/use-media-query";
+import { useReducedMotion, useIsTouchDevice } from "@/hooks/use-media-query";
 import { cn } from "@/utils/cn";
 
 interface ComponentCardProps {
@@ -193,8 +193,8 @@ function ComponentCardContent({ component }: ComponentCardProps) {
   const href = `/code/${component.slug}${queryString ? `?${queryString}` : ""}`;
 
   const prefersReducedMotion = useReducedMotion();
-  const isMobile = useIsMobile();
-  const disableWobble = prefersReducedMotion || isMobile;
+  const isTouchDevice = useIsTouchDevice();
+  const disableWobble = prefersReducedMotion || isTouchDevice;
 
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -247,9 +247,9 @@ function ComponentCardContent({ component }: ComponentCardProps) {
     <div
       className="block group cursor-pointer"
       ref={cardRef}
-      onPointerMove={handlePointerMove}
-      onPointerEnter={handlePointerEnter}
-      onPointerLeave={handlePointerLeave}
+      onPointerMove={disableWobble ? undefined : handlePointerMove}
+      onPointerEnter={disableWobble ? undefined : handlePointerEnter}
+      onPointerLeave={disableWobble ? undefined : handlePointerLeave}
       style={{ perspective: disableWobble ? "none" : "1000px" }}
     >
       <Link href={href} prefetch={false} className="block w-full h-full">

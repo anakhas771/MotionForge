@@ -1,15 +1,17 @@
 "use client";
 import { useRef, useEffect } from "react";
 import { useMousePosition } from "@/hooks/use-mouse-position";
-import { useReducedMotion } from "@/hooks/use-media-query";
+import { useReducedMotion, useIsTouchDevice } from "@/hooks/use-media-query";
 
 export function PremiumBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouse = useMousePosition();
   const prefersReducedMotion = useReducedMotion();
+  const isTouchDevice = useIsTouchDevice();
+  const disableAnimation = prefersReducedMotion || isTouchDevice;
 
   useEffect(() => {
-    if (prefersReducedMotion || !containerRef.current) return;
+    if (disableAnimation || !containerRef.current) return;
 
     const container = containerRef.current;
     const gradient1 = container.querySelector(".gradient-orb-1") as HTMLDivElement;
@@ -28,7 +30,7 @@ export function PremiumBackground() {
     gradient1.style.transform = `translate(${moveX1}px, ${moveY1}px)`;
     gradient2.style.transform = `translate(${moveX2}px, ${moveY2}px)`;
     gradient3.style.transform = `translate(${moveX3}px, ${moveY3}px)`;
-  }, [mouse.normalizedX, mouse.normalizedY, prefersReducedMotion]);
+  }, [mouse.normalizedX, mouse.normalizedY, disableAnimation]);
 
   return (
     <div
@@ -43,31 +45,27 @@ export function PremiumBackground() {
       <div className="absolute inset-0 bg-gradient-to-b from-[#0f0f15]/60 via-[#050505]/80 to-[#020202]" />
 
       {/* Large soft radial light fields */}
-      {!prefersReducedMotion && (
-        <>
-          <div
-            className="gradient-orb-1 absolute -top-[20%] -left-[10%] w-[900px] h-[900px] rounded-full opacity-[0.12] blur-[140px] transition-transform duration-1000 ease-out"
-            style={{
-              background: "radial-gradient(circle at center, rgba(167,139,250,0.35) 0%, rgba(167,139,250,0.05) 50%, transparent 70%)",
-              animation: "float1 22s ease-in-out infinite",
-            }}
-          />
-          <div
-            className="gradient-orb-2 absolute top-[30%] -right-[15%] w-[700px] h-[700px] rounded-full opacity-[0.10] blur-[120px] transition-transform duration-1000 ease-out"
-            style={{
-              background: "radial-gradient(circle at center, rgba(96,165,250,0.30) 0%, rgba(96,165,250,0.05) 50%, transparent 70%)",
-              animation: "float2 28s ease-in-out infinite",
-            }}
-          />
-          <div
-            className="gradient-orb-3 absolute -bottom-[10%] left-[20%] w-[800px] h-[800px] rounded-full opacity-[0.08] blur-[130px] transition-transform duration-1000 ease-out"
-            style={{
-              background: "radial-gradient(circle at center, rgba(129,140,248,0.30) 0%, rgba(129,140,248,0.05) 50%, transparent 70%)",
-              animation: "float3 32s ease-in-out infinite",
-            }}
-          />
-        </>
-      )}
+      <div
+        className={`gradient-orb-1 absolute -top-[20%] -left-[10%] w-[900px] h-[900px] rounded-full opacity-[0.12] blur-[140px] transition-transform duration-1000 ease-out`}
+        style={{
+          background: "radial-gradient(circle at center, rgba(167,139,250,0.35) 0%, rgba(167,139,250,0.05) 50%, transparent 70%)",
+          animation: disableAnimation ? "none" : "float1 22s ease-in-out infinite",
+        }}
+      />
+      <div
+        className={`gradient-orb-2 absolute top-[30%] -right-[15%] w-[700px] h-[700px] rounded-full opacity-[0.10] blur-[120px] transition-transform duration-1000 ease-out`}
+        style={{
+          background: "radial-gradient(circle at center, rgba(96,165,250,0.30) 0%, rgba(96,165,250,0.05) 50%, transparent 70%)",
+          animation: disableAnimation ? "none" : "float2 28s ease-in-out infinite",
+        }}
+      />
+      <div
+        className={`gradient-orb-3 absolute -bottom-[10%] left-[20%] w-[800px] h-[800px] rounded-full opacity-[0.08] blur-[130px] transition-transform duration-1000 ease-out`}
+        style={{
+          background: "radial-gradient(circle at center, rgba(129,140,248,0.30) 0%, rgba(129,140,248,0.05) 50%, transparent 70%)",
+          animation: disableAnimation ? "none" : "float3 32s ease-in-out infinite",
+        }}
+      />
 
       {/* Very subtle grid pattern */}
       <div

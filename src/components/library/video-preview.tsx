@@ -12,6 +12,9 @@ let visibleObserver: IntersectionObserver | null = null;
 function getNearObserver() {
   if (typeof window === "undefined") return null;
   if (!nearObserver) {
+    const isMobile = window.innerWidth < 768;
+    const rootMargin = isMobile ? "150px 0px" : "400px 0px";
+    
     nearObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -19,7 +22,7 @@ function getNearObserver() {
           if (cb) cb(entry.isIntersecting);
         });
       },
-      { rootMargin: "400px 0px", threshold: 0 }
+      { rootMargin, threshold: 0 }
     );
   }
   return nearObserver;
@@ -112,7 +115,7 @@ export function VideoPreview({ videoSrc, fallback, className }: VideoPreviewProp
       {/* Placeholder / Fallback */}
       <div
         className={cn(
-          "absolute inset-0 flex items-center justify-center transition-opacity duration-300",
+          "absolute inset-0 flex items-center justify-center transition-opacity duration-150",
           isVideoReady ? "opacity-0" : "opacity-100"
         )}
       >
@@ -124,13 +127,14 @@ export function VideoPreview({ videoSrc, fallback, className }: VideoPreviewProp
         <video
           ref={videoRef}
           src={videoSrc}
+          preload="metadata"
           muted
           loop
           playsInline
           onLoadedData={handleReady}
           onCanPlay={handleReady}
           className={cn(
-            "absolute inset-0 w-full h-full object-cover transition-opacity duration-300",
+            "absolute inset-0 w-full h-full object-cover transition-opacity duration-150",
             isVideoReady ? "opacity-100" : "opacity-0"
           )}
         />
